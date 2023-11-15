@@ -1,4 +1,6 @@
 import './App.css'
+import { Navbar } from './components'
+import { Home } from './pages/Home'
 
 function App() {
 
@@ -6,10 +8,11 @@ function App() {
   return (
     <>
    
-      <h1>Customer Server Portal</h1>
+      <Navbar/>
+      <Home/>
 
     </>
-  )
+  );
 }
 
-export default App
+export default App;
