@@ -4,7 +4,7 @@ export type KnowledgeProps = {
 }
 
 const Knowledge: React.FC<KnowledgeProps>  = ({}) => {
-	return <div>Knowledge</div>;
+	return <>Knowledge</>;
 };
 
 export default Knowledge;
