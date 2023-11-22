@@ -4,7 +4,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-export type NavbarProps = {}
+
+export type NavbarProps = {
+	isLoggedIn: boolean;
+	userName?: string;
+	avatar?: string;
+  }
+  
 
 //Estas constantes definen los nombres de las páginas y las configuraciones que se mostrarán en los menús desplegables.
 const pages = [
@@ -13,9 +19,12 @@ const pages = [
 	{ title: 'My Support', link: './MySupport' },
 	
 ];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = [
+	{ title: 'Profile', link: './Profile' },
+	{ title: 'SignOut', link: './LoginForm' },
+];
 
-const Navbar: React.FC<NavbarProps> = ({ }) => {
+const Navbar: React.FC<NavbarProps> = ({isLoggedIn, userName, avatar  }) => {
 
 
 	//Aquí se utilizan los hooks de estado de React para declarar y gestionar dos estados: `anchorElNav` y `anchorElUser`. 
@@ -45,6 +54,8 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
+
+	
 	return (
 		<AppBar position="fixed">
 			<Container maxWidth="xl">
@@ -179,7 +190,7 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
 
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', justifyContent: 'flex-end' } }}>
-						<Tooltip title="User Menu" placement="bottom">
+					<Tooltip title="User Menu" placement="bottom">
 							<IconButton
 								size="large"
 								aria-label="account of current user"
@@ -188,7 +199,11 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
 								onClick={handleOpenUserMenu}
 								color="inherit"
 							>
-								<Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
+								{avatar ? (
+									<Avatar alt={userName} src={avatar} />
+								) : (
+									<Avatar alt={userName}>{userName?.charAt(0)}</Avatar>
+								)}
 							</IconButton>
 						</Tooltip>
 						<Menu
@@ -207,8 +222,10 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
 							onClose={handleCloseUserMenu}
 						>
 							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography>{setting}</Typography>
+								<MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+									<NavLink to={setting.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+										<Typography textAlign="left">{setting.title}</Typography>
+									</NavLink>
 								</MenuItem>
 							))}
 						</Menu>
